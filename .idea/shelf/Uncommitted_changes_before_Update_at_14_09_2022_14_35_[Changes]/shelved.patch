@@ -1,0 +1,37 @@
+Index: src/Scaner.java
+===================================================================
+diff --git a/src/Scaner.java b/src/Scaner.java
+--- a/src/Scaner.java	
++++ b/src/Scaner.java	
+@@ -1,2 +1,28 @@
+-package PACKAGE_NAME;public class Scaner {
+-}
++import java.util.Scanner;
++public class Scaner {
++    static Scanner sc = new Scanner(System.in);
++    public static double main() {
++        System.out.println("Введите число:");
++        double number;
++        if (sc.hasNextDouble()) {
++            number = sc.nextDouble();
++        } else {
++            System.out.println("Извините, вы вводите не число");
++            sc.nextInt();
++            number = main();
++        }
++        return number;
++    }
++    public static char symbol(){
++        System.out.println("Введите операцию: ");
++        char operation;
++        if (sc.hasNext()){
++            operation = sc.next().charAt(0);
++        } else {
++            System.out.println("Вы ввели неподдерживаему операцию");
++            sc.next();
++            operation = symbol();
++        }
++        return operation;
++    }
++}
+\ No newline at end of file

@@ -1,0 +1,230 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	
++++ b/.gitignore	
+@@ -11,6 +11,10 @@
+ .settings
+ .springBeans
+ .sts4-cache
++
++src/
++*.Scaner
++
+ bin/
+ !**/src/main/**/bin/
+ !**/src/test/**/bin/
+Index: src/Calculate.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Calculate.java b/src/Calculate.java
+--- a/src/Calculate.java	
++++ b/src/Calculate.java	
+@@ -1,26 +1,60 @@
+-public class Operation {
++import java.util.Scanner;
++public class Calculate {
++    static Scanner sc = new Scanner(System.in);
+     public static void main(String[] args) {
+-
+-        System.out.println(dev(10, 2));
++        double num1 = getNumberFromConsole();
++        double num2 = getNumberFromConsole();
++        char operation = symbol();
++        double result = calc(num1, num2, operation);
++        System.out.println("Ваш результат: " + result);
+     }
+-
+-    public static double sum(double arg1, double arg2) {
+-        double sum = arg1 + arg2;
+-        return sum;
+-    }
+-
+-    public static double sub(double arg1, double arg2) {
+-        double sub = arg1 - arg2;
+-        return sub;
++    public static double getNumberFromConsole() {
++        System.out.println("Введите число:");
++        double number;
++//        char symbol = sc.next().charAt(0);
++        if (sc.hasNextDouble()) {
++            number = sc.nextDouble();
++        } else {
++            System.out.println("Вы ввели неправильное число");
++//            sc.nextInt();
++            number = getNumberFromConsole();
++        }
++        return number;
+     }
+-
+-    public static double mult(double arg1, double arg2) {
+-        double mult = arg1 * arg2;
+-        return mult;
+-    }
+-
+-    public static double dev(double arg1, double arg2) {
+-        double dev = arg1 / arg2;
+-        return dev;
++        public static char symbol(){
++            System.out.println("Введите операцию: ");
++            char operation;
++            if (sc.hasNext()){
++                operation = sc.next().charAt(0);
++            } else {
++                System.out.println("Вы ввели неподдерживаему операцию");
++//                sc.next();
++                operation = symbol();
++            }
++            return operation;
++        }
++    public static double calc(double arg1, double arg2, char operation){
++        double result;
++        switch (operation) {
++            case '+':
++                result = arg1 + arg2;
++                break;
++            case '-':
++                result = arg1 - arg2;
++                break;
++            case '*':
++                result = arg1 * arg2;
++                break;
++            case '/':
++                if (arg2 == 0) {
++                    System.out.println("Делить на ноль нельзя!");
++                }else{
++                result = arg1 / arg2;
++                break;}
++            default:
++                System.out.println("Калькулятор не поддерживает данную операцию");
++                result = calc(arg1, arg2, operation);
++        }
++        return result;
+     }
+-}
+\ No newline at end of file
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,11 +1,32 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9e844919-aa31-4e50-b486-f9fcaaf01c16" name="Changes" comment="" />
++    <list default="true" id="9e844919-aa31-4e50-b486-f9fcaaf01c16" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Calculate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Calculate.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/Scaner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Scaner.java" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
+   </component>
+   <component name="ProjectId" id="2EZPHA0HMf2hBdvy2gaOHfrZdph" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+@@ -13,15 +34,54 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
++  <component name="RunManager" selected="Application.Calculate">
++    <configuration name="Calculate" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Calculate" />
++      <module name="Calculator" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Main" />
++      <module name="Calculator" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="Scan" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Scan" />
++      <module name="Calculator" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="Scaner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="Scaner" />
++      <module name="Calculator" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <recent_temporary>
++      <list>
++        <item itemvalue="Application.Calculate" />
++        <item itemvalue="Application.Scaner" />
++        <item itemvalue="Application.Main" />
++        <item itemvalue="Application.Scan" />
++      </list>
++    </recent_temporary>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
++      <changelist id="9e844919-aa31-4e50-b486-f9fcaaf01c16" name="Changes" comment="" />
+       <created>1662800064680</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+@@ -29,4 +89,15 @@
+     </task>
+     <servers />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file
